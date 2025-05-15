@@ -41,6 +41,29 @@ namespace MongoConsoleApp
             // var filter = Builders<Users>.Filter.In(g => g.Email, new[] { "example1@example.com", "example2@example.com" });
 
 
+            // case insense
+            // var regexFilter = Regex.Escape(filter);
+            //var bsonRegex = new BsonRegularExpression(regexFilter, "i");
+
+
+            var builder = Builders<Users>.Filter;
+
+            var builder2 = Builders<Users>.Filter;
+
+            var newFunFilter2 = builder2.Regex("email", "Jack_gleeson@gameofthron.es");
+
+            var newFunFilter = builder.Eq("email", "jack_gleeson@gameofthron.es");
+
+            var list = collection.Find(newFunFilter2).ToList();
+            var QuickResult = list.FirstOrDefault();
+
+            Console.WriteLine("\nstart result\n");
+
+
+            Console.WriteLine(QuickResult.ToBsonDocument());
+
+            Console.WriteLine("\nend result\n");
+
             List<Users> results = collection.Find(filter).ToList();
 
             if (results.Count == 0)
@@ -73,3 +96,21 @@ namespace MongoConsoleApp
 
 }
 
+
+
+//public override Paging<Website> GetList<TFilter>(IFilter<TFilter> filter)
+//{
+//    WebsiteFilter websiteFilter = filter as WebsiteFilter;
+
+//    var builder = Builders<Website>.Filter;
+//    FilterDefinition<Website> queryFilter = builder.Empty;
+
+//    if (!string.IsNullOrEmpty(websiteFilter.name))
+//    {
+//        queryFilter = queryFilter & builder.Regex($"name", new BsonRegularExpression($".*{websiteFilter.name}.*", "i"));
+//    }
+
+//    SortDefinition<Website> sort = Builders<Website>.Sort.Ascending(x => x.Id);
+
+//    return new Paging<Website>(this.Collection, websiteFilter.page, queryFilter, sort, websiteFilter.per_page);
+//}
