@@ -25,7 +25,7 @@ namespace MongoConsoleApp.Classes
         {
             if (Client is MongoClient)
             {
-                DB = Client.GetDatabase("sample_mflix");
+                DB = Client.GetDatabase("AppUsers");
             }
         }
 
