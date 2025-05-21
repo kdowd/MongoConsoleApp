@@ -7,7 +7,6 @@ using MongoDB;
 using MongoDB.Bson.Serialization.Attributes;
 using static System.Net.WebRequestMethods;
 
-// https://www.mongodb.com/docs/manual/reference/operator/query/type/#available-types
 
 namespace MongoConsoleApp.Classes
 {
@@ -26,9 +25,17 @@ namespace MongoConsoleApp.Classes
         [BsonElement("password")]
         public string Password { get; set; }
 
+        [BsonElement("created")]
+        public DateTime Created { get; set; }
+
+
+
         public Users(string name, string email, string password)
         {
             this.Name = name; this.Email = email; this.Password = password;
+            // every time we insert lets datestamp it. Its easy to do.
+            Created = DateTime.UtcNow.ToLocalTime();
+
         }
 
 

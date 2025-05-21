@@ -11,8 +11,6 @@ using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
 
-
-//https://github.com/iso8859/learn-mongodb-by-example/tree/main/dotnet/01%20-%20Begin
 namespace MongoConsoleApp
 
 {
@@ -21,15 +19,8 @@ namespace MongoConsoleApp
     {
         static void Main()
         {
-            // new MongoBase();
-            //new ListDataBases();
-
-
-            //var collection = MongoBase.DB.GetCollection<Users>("users");
-            // var userCount = collection.CountDocuments(Builders<Users>.Filter.Empty);
-
-
-            //string password = Utils.GenerateNewPassword(0);
+            new MongoBase();
+            IMongoCollection<Users> collection = MongoBase.DB.GetCollection<Users>("users");
 
             // complexity 8 = 256,   14 = 16,000 , 31 = 2, 147,483,646 iterations
             Console.WriteLine("Whats your password ?");
@@ -50,14 +41,17 @@ namespace MongoConsoleApp
 
                 Boolean resultAsBoolean = BCrypt.Net.BCrypt.EnhancedVerify(otherPassword, hashed);
 
+
                 string message = (resultAsBoolean == true) ? "Success, Logged are now logged-in." : "We do not recognise that Login.";
+
+                if (resultAsBoolean == true)
+                {
+                    Users temp = new Users("test", "blah@123.com", hashed);
+                    collection.InsertOne(temp);
+                }
 
                 Console.WriteLine(message);
             }
-
-
-
-
 
 
 
